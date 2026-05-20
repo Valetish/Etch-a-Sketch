@@ -2,3 +2,26 @@ body{
     margin: 0;
     padding: 0;
 }
+
+#container{
+    width: 640px;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    background: #333;
+    border: 2px solid #333;
+}
+
+.square{
+    flex: 0 0 calc(100% / 16);
+    box-sizing: border-box;
+    background: #ffffff;
+    aspect-ratio: 1 / 1;
+    border: 1px solid #ccc;
+}
+
+.square:hover{
+    background: #c8c8c8;
+    cursor: pointer;
+}

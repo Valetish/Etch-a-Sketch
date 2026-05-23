@@ -13,8 +13,11 @@
     </header>
 
     <main>
-    <div style="text-align:center; margin-top:10px;">
+    <div style="text-align:center; margin-top:10px; display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap;">
         <button id="resizeBtn">Change Grid Size</button>
+        <button id="modeBtn" type="button">Mode: RGB</button>
+        <label for="colorPicker">Pick color</label>
+        <input id="colorPicker" type="color" value="#000000">
     </div>
     
     <div id="container"></div>

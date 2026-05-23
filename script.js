@@ -19,14 +19,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getPaintColor() {
+        if (paintMode === 'erase') {
+            return '#ffffff';
+        }
         return paintMode === 'rgb' ? getRandomRgbColor() : selectedColor;
     }
 
     function updateModeButton() {
         if (!modeBtn) return;
-        modeBtn.textContent = paintMode === 'rgb'
-            ? 'Mode: RGB'
-            : 'Mode: Picked Color';
+        if (paintMode === 'rgb') {
+            modeBtn.textContent = 'Mode: RGB';
+            return;
+        }
+
+        if (paintMode === 'picked') {
+            modeBtn.textContent = 'Mode: Picked Color';
+            return;
+        }
+
+        modeBtn.textContent = 'Mode: Erase';
     }
 
     // set the fixed total width for the drawing area
@@ -70,7 +81,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (modeBtn) {
         modeBtn.addEventListener('click', () => {
-            paintMode = paintMode === 'rgb' ? 'picked' : 'rgb';
+            if (paintMode === 'rgb') {
+                paintMode = 'picked';
+            } else if (paintMode === 'picked') {
+                paintMode = 'erase';
+            } else {
+                paintMode = 'rgb';
+            }
             updateModeButton();
         });
         updateModeButton();

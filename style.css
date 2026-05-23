@@ -152,8 +152,8 @@ footer a{
 @media (max-width: 420px) {
     #container {
         width: calc(100vw - 32px);
-        margin-left: 16px;
-        margin-right: 16px;
+        max-width: 100%;
+        margin: 24px auto 0;
     }
     .controls { padding: 8px; gap: 8px; }
     .controls button { height: 34px; padding: 0 10px; }

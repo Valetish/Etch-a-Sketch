@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById('container');
     const changeSizeBtn = document.getElementById('resizeBtn');
-    const modeBtn = document.getElementById('modeBtn');
+    const rgbBtn = document.getElementById('rgbBtn');
+    const colorBtn = document.getElementById('colorBtn');
+    const eraseBtn = document.getElementById('eraseBtn');
     const colorPicker = document.getElementById('colorPicker');
     if (!container) return;
 
@@ -18,26 +20,86 @@ document.addEventListener("DOMContentLoaded", () => {
         return `rgb(${red}, ${green}, ${blue})`;
     }
 
-    function getPaintColor() {
-        if (paintMode === 'erase') {
-            return '#ffffff';
-        }
-        return paintMode === 'rgb' ? getRandomRgbColor() : selectedColor;
+    function getRandomRgbComponents() {
+        return {
+            red: Math.floor(Math.random() * 256),
+            green: Math.floor(Math.random() * 256),
+            blue: Math.floor(Math.random() * 256),
+        };
     }
 
-    function updateModeButton() {
-        if (!modeBtn) return;
-        if (paintMode === 'rgb') {
-            modeBtn.textContent = 'Mode: RGB';
+    function getRgbColorString(red, green, blue, factor = 1) {
+        const nextRed = Math.max(0, Math.round(red * factor));
+        const nextGreen = Math.max(0, Math.round(green * factor));
+        const nextBlue = Math.max(0, Math.round(blue * factor));
+        return `rgb(${nextRed}, ${nextGreen}, ${nextBlue})`;
+    }
+
+    function setActiveModeButtons() {
+        [rgbBtn, colorBtn, eraseBtn].forEach((button) => {
+            if (!button) return;
+            button.classList.remove('active-mode');
+        });
+
+        if (paintMode === 'rgb' && rgbBtn) rgbBtn.classList.add('active-mode');
+        if (paintMode === 'picked' && colorBtn) colorBtn.classList.add('active-mode');
+        if (paintMode === 'erase' && eraseBtn) eraseBtn.classList.add('active-mode');
+    }
+
+    function setPaintMode(nextMode) {
+        paintMode = nextMode;
+        setActiveModeButtons();
+    }
+
+    function paintRgbCell(cell) {
+        let baseRed = Number(cell.dataset.baseRed);
+        let baseGreen = Number(cell.dataset.baseGreen);
+        let baseBlue = Number(cell.dataset.baseBlue);
+
+        if (Number.isNaN(baseRed) || Number.isNaN(baseGreen) || Number.isNaN(baseBlue)) {
+            const baseColor = getRandomRgbComponents();
+            baseRed = baseColor.red;
+            baseGreen = baseColor.green;
+            baseBlue = baseColor.blue;
+            cell.dataset.baseRed = String(baseRed);
+            cell.dataset.baseGreen = String(baseGreen);
+            cell.dataset.baseBlue = String(baseBlue);
+            cell.dataset.rgbHits = '0';
+        }
+
+        const hits = Number(cell.dataset.rgbHits || '0');
+        if (hits >= 9) {
+            cell.style.backgroundColor = '#000000';
+            cell.dataset.rgbHits = '10';
+            return;
+        }
+
+        cell.style.backgroundColor = getRgbColorString(baseRed, baseGreen, baseBlue, 1 - (hits * 0.1));
+        cell.dataset.rgbHits = String(hits + 1);
+    }
+
+    function paintCell(cell) {
+        if (paintMode === 'erase') {
+            cell.style.backgroundColor = '#ffffff';
+            cell.style.backgroundImage = 'none';
+            cell.dataset.baseRed = '';
+            cell.dataset.baseGreen = '';
+            cell.dataset.baseBlue = '';
+            cell.dataset.rgbHits = '';
             return;
         }
 
         if (paintMode === 'picked') {
-            modeBtn.textContent = 'Mode: Picked Color';
+            cell.style.backgroundColor = selectedColor;
+            cell.style.backgroundImage = 'none';
+            cell.dataset.baseRed = '';
+            cell.dataset.baseGreen = '';
+            cell.dataset.baseBlue = '';
+            cell.dataset.rgbHits = '';
             return;
         }
 
-        modeBtn.textContent = 'Mode: Erase';
+        paintRgbCell(cell);
     }
 
     // set the fixed total width for the drawing area
@@ -54,11 +116,11 @@ document.addEventListener("DOMContentLoaded", () => {
             cell.style.flex = `0 0 calc(100% / ${n})`;
             cell.addEventListener('mousedown', () => {
                 isPainting = true;
-                cell.style.backgroundColor = getPaintColor();
+                paintCell(cell);
             });
             cell.addEventListener('mouseenter', () => {
                 if (!isPainting) return;
-                cell.style.backgroundColor = getPaintColor();
+                paintCell(cell);
             });
             container.appendChild(cell);
         }
@@ -79,19 +141,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if (modeBtn) {
-        modeBtn.addEventListener('click', () => {
-            if (paintMode === 'rgb') {
-                paintMode = 'picked';
-            } else if (paintMode === 'picked') {
-                paintMode = 'erase';
-            } else {
-                paintMode = 'rgb';
-            }
-            updateModeButton();
-        });
-        updateModeButton();
+    if (rgbBtn) {
+        rgbBtn.addEventListener('click', () => setPaintMode('rgb'));
     }
+
+    if (colorBtn) {
+        colorBtn.addEventListener('click', () => setPaintMode('picked'));
+    }
+
+    if (eraseBtn) {
+        eraseBtn.addEventListener('click', () => setPaintMode('erase'));
+    }
+
+    setActiveModeButtons();
 
     // initial grid
     makeGrid(16);

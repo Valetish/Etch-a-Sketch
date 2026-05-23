@@ -1,29 +1,112 @@
+*{
+    box-sizing: border-box;
+}
+
 body{
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #e8eefc;
+    background-color: #240a31;
 }
+
+header{
+    padding-top: 24px;
+    text-align: center;
+}
+
+header h2{
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+    color: #f4f7ff;
+}
+
 main{
-    width: 70%;
+    width: min(92vw, 820px);
     margin: 0 auto;
+    padding: 24px 0 40px;
+}
+
+.controls{
+    width: min(100%, 760px);
+    margin: 0 auto;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.controls button,
+.controls input[type="color"]{
+    height: 40px;
+    border: 1px solid rgba(235, 148, 255, 0.18);
+    border-radius: 5px;
+}
+
+.controls button{
+    padding: 0 16px;
+    background: rgba(18, 32, 58, 0.95);
+    color: #e8eefc;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.controls button:hover{
+    transform: translateY(-1px);
+    background: rgba(29, 48, 84, 0.98);
+    border-color: rgba(117, 163, 255, 0.42);
+}
+
+.controls button.active-mode{
+    background-color: #b02dcb;
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 10px 24px rgba(182, 37, 235, 0.34);
+}
+
+.controls label{
+    font-size: 0.95rem;
+    color: #bfd0f7;
+}
+
+.controls input[type="color"]{
+    width: 54px;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
 }
 
 #container{
     width: 450px;
-    margin: 20px auto;
+    margin: 24px auto 0;
     display: flex;
     flex-wrap: wrap;
     gap: 0;
-    background: #333;
-    border: 2px solid #333;
+    background: rgba(9, 18, 34, 0.92);
+    border: 1px solid rgba(148, 180, 255, 0.16);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
 }
 
 .square{
-    box-sizing: border-box;
     background: #ffffff;
     aspect-ratio: 1 / 1;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(10, 24, 43, 0.18);
 }
 
 .square:hover{
-    cursor: pointer;
+    cursor: crosshair;
+}
+
+footer{
+    text-align: center;
+    color: #8ea4d4;
+    padding-bottom: 24px;
 }

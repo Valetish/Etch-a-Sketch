@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const CONTAINER_WIDTH_PX = 450; // total drawing area width
     const MAX_SQUARES = 100; // safety limit
+    let isPainting = false;
 
     function getRandomRgbColor() {
         const red = Math.floor(Math.random() * 256);
@@ -25,12 +26,25 @@ document.addEventListener("DOMContentLoaded", () => {
             cell.className = 'square';
             // each cell takes 1/n of the row width
             cell.style.flex = `0 0 calc(100% / ${n})`;
-            cell.addEventListener('click', () => {
+            cell.addEventListener('mousedown', () => {
+                isPainting = true;
+                cell.style.backgroundColor = getRandomRgbColor();
+            });
+            cell.addEventListener('mouseenter', () => {
+                if (!isPainting) return;
                 cell.style.backgroundColor = getRandomRgbColor();
             });
             container.appendChild(cell);
         }
     }
+
+    window.addEventListener('mouseup', () => {
+        isPainting = false;
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isPainting = false;
+    });
 
     // initial grid
     makeGrid(16);

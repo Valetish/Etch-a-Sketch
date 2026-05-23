@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const CONTAINER_WIDTH_PX = 450; // total drawing area width
     const MAX_SQUARES = 100; // safety limit
 
+    function getRandomRgbColor() {
+        const red = Math.floor(Math.random() * 256);
+        const green = Math.floor(Math.random() * 256);
+        const blue = Math.floor(Math.random() * 256);
+        return `rgb(${red}, ${green}, ${blue})`;
+    }
+
     // set the fixed total width for the drawing area
     container.style.width = CONTAINER_WIDTH_PX + 'px';
 
@@ -18,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
             cell.className = 'square';
             // each cell takes 1/n of the row width
             cell.style.flex = `0 0 calc(100% / ${n})`;
+            cell.addEventListener('click', () => {
+                cell.style.backgroundColor = getRandomRgbColor();
+            });
             container.appendChild(cell);
         }
     }

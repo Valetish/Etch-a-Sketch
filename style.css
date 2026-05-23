@@ -25,6 +25,5 @@ main{
 }
 
 .square:hover{
-    background: #c8c8c8;
     cursor: pointer;
 }

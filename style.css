@@ -83,7 +83,8 @@ main{
 }
 
 #container{
-    width: 450px;
+    width: min(92vw, 450px);
+    max-width: 100%;
     margin: 24px auto 0;
     display: flex;
     flex-wrap: wrap;
@@ -126,6 +127,34 @@ footer p{
 }
 
 footer a{
-    display:inline-flex;
-     align-items:center
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Responsive breakpoints for the drawing container */
+@media (max-width: 900px) {
+    #container {
+        width: min(90vw, 420px);
     }
+}
+
+@media (max-width: 600px) {
+    #container {
+        width: min(94vw, 360px);
+    }
+    .controls {
+        padding: 10px;
+        gap: 8px;
+    }
+    .controls button { height: 36px; }
+}
+
+@media (max-width: 420px) {
+    #container {
+        width: calc(100vw - 32px);
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+    .controls { padding: 8px; gap: 8px; }
+    .controls button { height: 34px; padding: 0 10px; }
+}

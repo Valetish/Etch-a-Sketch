@@ -49,7 +49,7 @@ main{
 
 .controls button{
     padding: 0 16px;
-    background: rgba(18, 32, 58, 0.95);
+    background: rgba(65, 31, 94, 0.95);
     color: #e8eefc;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -59,8 +59,8 @@ main{
 
 .controls button:hover{
     transform: translateY(-1px);
-    background: rgba(29, 48, 84, 0.98);
-    border-color: rgba(117, 163, 255, 0.42);
+    background: rgba(65, 29, 84, 0.98);
+    border-color: rgba(241, 117, 255, 0.42);
 }
 
 .controls button.active-mode{
@@ -72,7 +72,7 @@ main{
 
 .controls label{
     font-size: 0.95rem;
-    color: #bfd0f7;
+    color: #fdf4ff;
 }
 
 .controls input[type="color"]{
@@ -89,7 +89,7 @@ main{
     flex-wrap: wrap;
     gap: 0;
     background: rgba(9, 18, 34, 0.92);
-    border: 1px solid rgba(148, 180, 255, 0.16);
+    border: 1px solid rgba(223, 148, 255, 0.16);
     border-radius: 18px;
     overflow: hidden;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
@@ -111,7 +111,7 @@ footer{
     align-items: center;
     gap: 15px;
     text-align: center;
-    color: #8ea4d4;
+    color: #c68ed4;
     padding-bottom: 24px;
 }
 

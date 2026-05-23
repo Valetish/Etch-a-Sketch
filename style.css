@@ -106,7 +106,26 @@ main{
 }
 
 footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
     text-align: center;
     color: #8ea4d4;
     padding-bottom: 24px;
 }
+
+a{
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+footer p{
+    margin:0 10px;
+}
+
+footer a{
+    display:inline-flex;
+     align-items:center
+    }
